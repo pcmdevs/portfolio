@@ -83,7 +83,7 @@ def carregar_imagem(nome_arquivo):
         return surface_erro
 
 
-# --- Carregamento de Imagens ---
+
 img_jogador_cajado = carregar_imagem("jogador_cajado.png")
 img_jogador_espadao = carregar_imagem("jogador_espadão.png")
 img_jogador_adagas = carregar_imagem("jogador_adagas.png")
@@ -93,10 +93,10 @@ img_encapuzado = carregar_imagem("encapuzado.png")
 img_goblin = carregar_imagem("goblin.png")
 img_aranhao = carregar_imagem("aranhao.png")
 img_chefao = carregar_imagem("chefao.png")
-img_esqueleto_rh = carregar_imagem("esqueleto.png")  # Placeholder
-img_aranhao_ti = carregar_imagem("aranhao.png")  # Placeholder
+img_esqueleto_rh = carregar_imagem("esqueleto.png")  
+img_aranhao_ti = carregar_imagem("aranhao.png")  
 img_goao_jilherme = carregar_imagem(
-    "goao_jilherme.png")  # Imagem do novo chefe
+    "goao_jilherme.png")  
 img_orc = carregar_imagem("orc.png")
 
 img_dado = carregar_imagem("dado.png")
@@ -109,7 +109,7 @@ def redimensionar_imagem(imagem, largura, altura):
     return None
 
 
-# --- Redimensionamento de Imagens ---
+
 img_jogador_cajado = redimensionar_imagem(img_jogador_cajado, 150, 150)
 img_jogador_espadao = redimensionar_imagem(img_jogador_espadao, 150, 150)
 img_jogador_adagas = redimensionar_imagem(img_jogador_adagas, 150, 150)
@@ -121,7 +121,7 @@ img_chefao = redimensionar_imagem(img_chefao, 150, 150)
 img_esqueleto_rh = redimensionar_imagem(img_esqueleto_rh, 150, 150)
 img_aranhao_ti = redimensionar_imagem(img_aranhao_ti, 150, 150)
 img_goao_jilherme = redimensionar_imagem(
-    img_goao_jilherme, 180, 180)  # Redimensiona a imagem do chefe
+    img_goao_jilherme, 180, 180)  
 
 img_dado = redimensionar_imagem(img_dado, 100, 100)
 img_fundo_batalha = redimensionar_imagem(img_fundo_batalha, LARGURA, ALTURA)
@@ -400,7 +400,7 @@ class Personagem:
     def ganhar_experiencia(self, exp):
         self.experiencia += exp
         while self.experiencia >= self.experiencia_necessaria:
-            pontos_ganhos = 5  # Guarda os pontos antes de zerar
+            pontos_ganhos = 5  
             self.experiencia -= self.experiencia_necessaria
             self.experiencia_necessaria = int(
                 self.experiencia_necessaria * 1.5)
@@ -408,19 +408,19 @@ class Personagem:
 
     def subir_nivel(self, pontos_ganhos):
         self.nivel += 1
-        self.pontos_atributo += pontos_ganhos  # Adiciona os pontos ganhos
-        self.vida = self.vida_base  # Restaura vida base
-        self.mana = self.mana_base  # Restaura mana base
+        self.pontos_atributo += pontos_ganhos  
+        self.vida = self.vida_base 
+        self.mana = self.mana_base  
 
         mensagem = f"\nVocê subiu para o nível {self.nivel}, parabéns!"
         mensagem += "\nSua vida e mana foram totalmente restauradas."
         mensagem += f"\nVocê ganhou {pontos_ganhos} pontos de atributo!"
         exibir_texto(mensagem)
 
-        # Chama a tela de distribuição de pontos
+        
         tela_distribuir_pontos(self)
 
-    # Modificado para aplicar um ponto por vez, chamado pela interface gráfica
+    
     def distribuir_ponto_atributo(self, atributo_escolhido):
         if self.pontos_atributo > 0:
             if atributo_escolhido == "vida":
@@ -442,12 +442,12 @@ class Personagem:
                 self.inteligencia_base += 1
                 self.inteligencia += 1
             else:
-                return False  # Atributo inválido
+                return False 
 
             self.pontos_atributo -= 1
-            return True  # Ponto distribuído com sucesso
+            return True  
         else:
-            return False  # Sem pontos para distribuir
+            return False  
 
     def usar_mana(self, custo):
         if self.mana >= custo:
@@ -529,19 +529,19 @@ class Monstros:
         self.destreza = destreza
         self.inteligencia = inteligencia
         self.imagem = imagem
-        self.exp_concedida = exp_concedida  # XP que o monstro dá ao ser derrotado
+        self.exp_concedida = exp_concedida  
 
     def atacar(self, personagem):
         dano, mensagem_extra = self.realizar_ataque(personagem)
-        # Garante dano mínimo 1 para o monstro também
+       
         dano_final = max(1, int(dano)) if dano > 0 else 0
         personagem.vida -= dano_final
         personagem.vida = max(0, personagem.vida)
         return dano_final, f"{self.nome} {mensagem_extra}, causando {dano_final:.0f} de dano."
 
     def realizar_ataque(self, personagem):
-        # Método base, retorna dano 0 e mensagem padrão
-        # As subclasses devem sobrescrever este método
+       
+        
         return 0, "ataca"
 
 
@@ -555,7 +555,7 @@ class Esqueleto(Monstros):
         if random.random() < 0.1:
             dano *= 1.5
             mensagem = "ataca com um golpe CRÍTICO"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
 
@@ -569,7 +569,7 @@ class Encapuzado(Monstros):
         mensagem = "lança um feitiço sombrio"
         if random.random() < 0.15:
             mensagem = "lança uma magia venenosa"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
 
@@ -583,7 +583,7 @@ class Goblin(Monstros):
         if random.random() < 0.2:
             dano *= 1.5
             mensagem = "ataca com adagas CRÍTICAS"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
 
@@ -596,10 +596,10 @@ class Aranhao(Monstros):
         mensagem = "ataca com suas patas afiadas"
         if random.random() < 0.1:
             mensagem = "tece uma teia pegajosa"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
-# --- Novos Monstros Capítulo 2 ---
+
 
 
 class EsqueletoRH(Monstros):
@@ -616,10 +616,10 @@ class EsqueletoRH(Monstros):
              (self.vigor * 0.2) + (self.força * 0.2))
         ]
         mensagem, dano = random.choice(ataques)
-        if random.random() < 0.1:  # Chance de crítico
+        if random.random() < 0.1:  
             dano *= 1.5
             mensagem += " (CRÍTICO!)"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
 
@@ -635,13 +635,13 @@ class AranhaoTI(Monstros):
             ("tece uma teia de firewalls impenetráveis",
              (self.inteligencia * 0.4) + (self.vigor * 0.1)),
             ("reseta suas configurações de ataque", (self.destreza * 0.3) +
-             (self.inteligencia * 0.3))  # Poderia ter um efeito especial
+             (self.inteligencia * 0.3))  
         ]
         mensagem, dano = random.choice(ataques)
-        if random.random() < 0.15:  # Chance de crítico
+        if random.random() < 0.15:  
             dano *= 1.5
             mensagem += " (CRÍTICO!)"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
 
@@ -657,16 +657,16 @@ class OrcTrabalhista(Monstros):
             ("Arremessa uma pilha de processos para ser digitalizados",
              (self.inteligencia * 0.4) + (self.vigor * 0.1)),
             ("Te obriga a ir fazer o café", (self.destreza * 0.3) +
-             (self.inteligencia * 0.3))  # Poderia ter um efeito especial
+             (self.inteligencia * 0.3))  
         ]
         mensagem, dano = random.choice(ataques)
-        if random.random() < 0.15:  # Chance de crítico
+        if random.random() < 0.15: 
             dano *= 1.5
             mensagem += " (CRÍTICO!)"
-        # Dano é aplicado na função atacar da classe base
+       
         return dano, mensagem
 
-# --- Fim Novos Monstros ---
+
 
 
 class Ademiro(Monstros):
@@ -686,10 +686,10 @@ class Ademiro(Monstros):
         else:
             dano = self.inteligencia * 0.5
             mensagem = "conjura uma magia profana"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
-# --- Novo Chefe Capítulo 2: Goão Jilherme ---
+
 
 
 class GoaoJilherme(Monstros):
@@ -733,13 +733,13 @@ class GoaoJilherme(Monstros):
 
     def realizar_ataque(self, personagem):
         mensagem, dano = random.choice(self.dialogos_ataque)
-        if random.random() < 0.2:  # Chance de crítico
+        if random.random() < 0.2: 
             dano *= 1.5
             mensagem += " (Eita, foi CRÍTICO!)"
-        # Dano é aplicado na função atacar da classe base
+        
         return dano, mensagem
 
-# --- Fim Novo Chefe ---
+
 
 
 def combate(jogador, monstro, resistencias, dado_jogador, tela):
@@ -752,11 +752,11 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
     mostrar_resultado_dado = False
     ultimo_ataque_jogador = ""
 
-    # Cor da barra de vida do jogador
+    
     barra_vida_jogador = Barra(50, 450, 200, 20, jogador.vida_base, VERDE)
     barra_mana_jogador = Barra(50, 480, 200, 20, jogador.mana_base, AZUL)
 
-    # Posição e cor ajustadas
+    
     barra_vida_monstro = Barra(575, 205, 200, 20, monstro.vida_max, VERMELHO)
     barra_vida_monstro.atualizar(monstro.vida)
 
@@ -799,7 +799,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
     clock = pygame.time.Clock()
     while rodando:
 
-        # Verifica condição de fim de combate ANTES de processar eventos ou desenhar
+        
         if jogador.vida <= 0:
             if isinstance(monstro, GoaoJilherme):
                 mensagens.append(monstro.dialogo_derrota_aleatorio())
@@ -807,17 +807,17 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
                 mensagens.append(f"Você foi derrotado pelo {monstro.nome}!")
             resultado_combate = "derrota"
             rodando = False
-            break  # Sai do loop imediatamente
+            break  
         elif monstro.vida <= 0:
             if isinstance(monstro, GoaoJilherme):
                 mensagens.append(monstro.dialogo_vitoria_aleatorio())
             else:
                 mensagens.append(f"Você derrotou o {monstro.nome}!")
             jogador.ganhar_experiencia(
-                monstro.exp_concedida)  # Usa XP do monstro
+                monstro.exp_concedida) 
             resultado_combate = "vitoria"
             rodando = False
-            break  # Sai do loop imediatamente
+            break  
 
         barra_vida_jogador.atualizar(jogador.vida)
         barra_mana_jogador.atualizar(jogador.mana)
@@ -863,27 +863,24 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
                             elif golpe:
                                 tipo = jogador.arma_inicial
                                 inimigo = monstro.nome.lower()
-                                dano_modificado = dano  # Dano já é o final calculado
+                                dano_modificado = dano  
 
-                                # Aplica resistência se houver
+                                
                                 if tipo in resistencias and inimigo in resistencias[tipo]:
                                     resistencia = resistencias[tipo][inimigo]
-                                    # Ajuste na lógica de resistência: dano_modificado *= (1 - resistencia) se for % ou dano_modificado /= resistencia se for multiplicador
-                                    # Assumindo que o valor em 'resistencias' é um multiplicador (0.9 = 10% resistente, 1.1 = 10% vulnerável)
+                                   
                                     dano_modificado /= resistencia
-                                    # Garante dano mínimo 1 pós-resistência
+                                    
                                     dano_modificado = max(
                                         1, int(dano_modificado)) if dano_modificado > 0 else 0
                                     mensagens.append(
                                         f"({monstro.nome} tem resistência/vulnerabilidade: {resistencia:.1f}x -> Dano: {dano_modificado:.0f})")
                                 else:
-                                    # Garante dano mínimo 1 se não houver resistência
+                                    
                                     dano_modificado = max(
                                         1, int(dano)) if dano > 0 else 0
 
-                                # Aplica o dano final ao monstro (já feito na função atacar)
-                                # monstro.vida -= dano_modificado # Linha removida, dano já aplicado em atacar()
-                                # monstro.vida = max(0, monstro.vida) # Linha removida, já feito em atacar()
+                              
 
                                 mensagens.append(f"Seu golpe ")
                                 mensagens.append(
@@ -902,7 +899,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
                                 "Falha na rolagem do dado! Seu ataque não teve efeito.")
                             acao_jogador_realizada = True
 
-                        # Verifica fim de combate APÓS o ataque do jogador
+                        
                         if monstro.vida <= 0:
                             if isinstance(monstro, GoaoJilherme):
                                 mensagens.append(
@@ -913,7 +910,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
                             jogador.ganhar_experiencia(monstro.exp_concedida)
                             resultado_combate = "vitoria"
                             rodando = False
-                            # break # Não precisa de break aqui, o loop principal vai parar
+                            
                         elif acao_jogador_realizada:
                             turno += 1
                             ultimo_ataque_jogador = ""
@@ -937,14 +934,14 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
                 botao_dado.verificar_hover(mouse_pos)
                 botao_passar.verificar_hover(mouse_pos)
 
-        # Turno do Monstro
+        
         if turno % 2 == 1 and rodando:
             pygame.time.delay(1000)
             dano, msg_monstro = monstro.atacar(jogador)
             mensagens.append(msg_monstro)
             mensagens.append(f"Sua vida restante: {jogador.vida:.0f}")
 
-            # Verifica fim de combate APÓS o ataque do monstro
+           
             if jogador.vida <= 0:
                 if isinstance(monstro, GoaoJilherme):
                     mensagens.append(monstro.dialogo_derrota_aleatorio())
@@ -953,7 +950,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
                         f"Você foi derrotado pelo {monstro.nome}!")
                 resultado_combate = "derrota"
                 rodando = False
-                # break # Não precisa de break aqui, o loop principal vai parar
+                
             else:
                 turno += 1
                 valor_dado = None
@@ -962,19 +959,19 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
         if len(mensagens) > 6:
             mensagens = mensagens[-6:]
 
-        # --- Desenho --- (Só desenha se o jogo ainda estiver rodando)
+        
         if rodando:
-            # Desenha o fundo da batalha primeiro
+           
             if img_fundo_batalha:
                 tela.blit(img_fundo_batalha, (0, 0))
             else:
-                tela.fill(PRETO)  # Fallback para cor sólida se a imagem falhar
+                tela.fill(PRETO)  
 
-            # Desenha os personagens e outros elementos sobre o fundo
+            
             if jogador.imagem:
                 tela.blit(jogador.imagem, (50, 300))
             if monstro.imagem:
-                # Ajusta a posição Y do chefe para melhor encaixe
+                
                 pos_y_monstro = 30 if isinstance(monstro, GoaoJilherme) else 50
                 tela.blit(monstro.imagem, (600, pos_y_monstro))
 
@@ -1000,26 +997,26 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
 
             try:
                 texto_jogador = fonte_media.render(
-                    # Cor alterada para verde
+                 
                     f"{jogador.nome} (Nível {jogador.nivel})", True, VERDE)
                 texto_monstro = fonte_media.render(
-                    monstro.nome, True, VERMELHO)  # Cor alterada para vermelho
+                    monstro.nome, True, VERMELHO)  
                 tela.blit(texto_jogador, (50, 420))
-                # Ajusta posição Y do nome do monstro
+                
                 pos_y_nome_monstro = 185
                 if isinstance(monstro, GoaoJilherme):
-                    pos_y_nome_monstro = 215  # Desce um pouco para não sobrepor a imagem maior
+                    pos_y_nome_monstro = 215  
                 tela.blit(texto_monstro, (575, pos_y_nome_monstro))
             except pygame.error as e:
                 print(f"Erro ao renderizar nomes: {e}")
 
-            # Caixa de mensagens semi-transparente
+            
             caixa_msg_rect = pygame.Rect(40, 40, LARGURA - 400, 150)
             s = pygame.Surface(
                 (caixa_msg_rect.width, caixa_msg_rect.height), pygame.SRCALPHA)
-            s.fill((50, 50, 50, 180))  # Cinza escuro com alpha
+            s.fill((50, 50, 50, 180))  
             tela.blit(s, (caixa_msg_rect.x, caixa_msg_rect.y))
-            pygame.draw.rect(tela, CINZA_CLARO, caixa_msg_rect, 1)  # Borda
+            pygame.draw.rect(tela, CINZA_CLARO, caixa_msg_rect, 1)  
 
             for i, msg in enumerate(mensagens):
                 try:
@@ -1037,10 +1034,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
 
             pygame.display.flip()
             clock.tick(30)
-        # --- Fim Desenho ---
-
-    # --- Pós-Combate ---
-    # Exibe a última tela com a mensagem final (vitória/derrota)
+        
     if img_fundo_batalha:
         tela.blit(img_fundo_batalha, (0, 0))
     else:
@@ -1072,7 +1066,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
     s.fill((50, 50, 50, 180))
     tela.blit(s, (caixa_msg_rect.x, caixa_msg_rect.y))
     pygame.draw.rect(tela, CINZA_CLARO, caixa_msg_rect, 1)
-    for i, msg in enumerate(mensagens[-6:]):  # Mostra as últimas mensagens
+    for i, msg in enumerate(mensagens[-6:]):  
         try:
             texto_msg = fonte_pequena.render(msg, True, BRANCO)
             tela.blit(texto_msg, (caixa_msg_rect.x + 10,
@@ -1081,7 +1075,7 @@ def combate(jogador, monstro, resistencias, dado_jogador, tela):
             print(f"Erro ao renderizar mensagem pós-combate: {e}")
 
     pygame.display.flip()
-    # Aumenta o delay para ler a mensagem final, especialmente do chefe
+  
     pygame.time.delay(4000)
     return resultado_combate
 
@@ -1129,7 +1123,7 @@ def exibir_texto(texto, cor=BRANCO, velocidade_palavras=10):
         pygame.display.flip()
         clock.tick(30)
 
-# --- Nova Função: Tela de Distribuição de Pontos ---
+
 
 
 def tela_distribuir_pontos(jogador):
@@ -1168,10 +1162,10 @@ def tela_distribuir_pontos(jogador):
                     if acao and acao.startswith("add_"):
                         atributo_escolhido = acao.split("_")[1]
                         if jogador.distribuir_ponto_atributo(atributo_escolhido):
-                            # Ponto adicionado, a interface será atualizada no loop de desenho
+                          
                             pass
                         else:
-                            # Feedback visual/sonoro de que não há mais pontos?
+                           
                             pass
                         acao_clicada = acao
                         break
@@ -1180,7 +1174,7 @@ def tela_distribuir_pontos(jogador):
                     acao_confirmar = botao_confirmar.verificar_clique(
                         mouse_pos)
                     if acao_confirmar == "confirmar":
-                        # Permite confirmar mesmo com pontos restantes
+                      
                         rodando = False
 
             if evento.type == pygame.MOUSEMOTION:
@@ -1190,19 +1184,19 @@ def tela_distribuir_pontos(jogador):
 
         tela.fill(PRETO)
 
-        # Título
+       
         texto_titulo_surf = fonte_grande.render(
             "Distribua seus Pontos!", True, AMARELO)
         titulo_rect = texto_titulo_surf.get_rect(center=(LARGURA // 2, 50))
         tela.blit(texto_titulo_surf, titulo_rect)
 
-        # Pontos restantes
+       
         texto_pontos_surf = fonte_media.render(
             f"Pontos restantes: {jogador.pontos_atributo}", True, BRANCO)
         pontos_rect = texto_pontos_surf.get_rect(center=(LARGURA // 2, 100))
         tela.blit(texto_pontos_surf, pontos_rect)
 
-        # Atributos e botões
+       
         for i, attr in enumerate(atributos):
             nome_attr = nomes_atributos[attr]
             valor_base = getattr(jogador, f"{attr}_base")
@@ -1210,7 +1204,7 @@ def tela_distribuir_pontos(jogador):
                 f"{nome_attr}: {valor_base}", True, BRANCO)
             tela.blit(texto_attr_surf, (LARGURA // 2 - 150,
                       y_inicial + i * (altura_botao + 15) + 5))
-            # Desabilita botão '+' se não houver pontos
+           
             if jogador.pontos_atributo > 0:
                 botoes_atributo[i].cor_normal = VERDE
                 botoes_atributo[i].cor_hover = (100, 255, 100)
@@ -1219,7 +1213,7 @@ def tela_distribuir_pontos(jogador):
                 botoes_atributo[i].cor_hover = CINZA_ESCURO
             botoes_atributo[i].desenhar(tela)
 
-        # Botão Confirmar
+      
         botao_confirmar.desenhar(tela)
 
         pygame.display.flip()
@@ -1234,7 +1228,7 @@ def obter_escolha(pergunta, opcoes):
     y_inicial_botoes = (ALTURA - altura_total_botoes) // 2 + 50
 
     for i, opcao_texto in enumerate(opcoes):
-        acao_botao = opcao_texto.lower().replace(" ", "_")  # Ação baseada no texto
+        acao_botao = opcao_texto.lower().replace(" ", "_")  
         botoes.append(Botao(LARGURA // 2 - 100, y_inicial_botoes + i * 50, 200,
                       40, opcao_texto, AZUL, (100, 100, 255), BRANCO, acao=acao_botao))
 
@@ -1309,10 +1303,10 @@ def obter_nome():
                     if nome.strip():
                         rodando = False
                 elif evento.key == pygame.K_SPACE:
-                    if nome and nome[-1] != " ":  # Evita espaços duplos
+                    if nome and nome[-1] != " ":  
                         nome += " "
                 else:
-                    # Permite letras, números e espaço (mas não no início)
+                  
                     if len(nome) < 20 and (evento.unicode.isalnum() or (evento.unicode == " " and nome)):
                         nome += evento.unicode
 
@@ -1345,13 +1339,13 @@ def obter_nome():
         except pygame.error as e:
             print(f"Erro ao renderizar nome: {e}")
 
-        # Cursor piscando
+        
         if ativo and pygame.time.get_ticks() % 1000 < 500:
             try:
                 cursor_pos = input_rect.x + 5 + texto_nome_surface.get_width()
                 pygame.draw.line(
                     tela, BRANCO, (cursor_pos, input_rect.y + 5), (cursor_pos, input_rect.y + 35), 2)
-            except NameError:  # Se texto_nome_surface ainda não foi criado
+            except NameError:  
                 pygame.draw.line(
                     tela, BRANCO, (input_rect.x + 5, input_rect.y + 5), (input_rect.x + 5, input_rect.y + 35), 2)
             except pygame.error:
@@ -1417,12 +1411,12 @@ def menu_principal():
         clock.tick(30)
 
 
-# Variável global para o jogador, para ser acessível na classe GoaoJilherme
+
 jogador = None
 
 
 def jogo_principal():
-    global jogador  # Declara que vamos usar a variável global
+    global jogador  
 
     tocar_musica(musica_jogo, volume=0.3)
 
@@ -1435,10 +1429,10 @@ def jogo_principal():
     if not arma_escolhida:
         return
 
-    # Instancia o jogador na variável global
+
     if arma_escolhida == "espadão":
         jogador = Personagem(nome_jogador, 25, 11, 11, 20, 6, 4, "espadão")
-    elif arma_escolhida == "duas_adagas":  # Corrigido para usar o valor retornado por obter_escolha
+    elif arma_escolhida == "duas_adagas":  
         jogador = Personagem(nome_jogador, 22, 12, 10, 8, 20, 6, "duas adagas")
     elif arma_escolhida == "cajado":
         jogador = Personagem(nome_jogador, 18, 15, 8, 5, 4, 20, "cajado")
@@ -1446,7 +1440,7 @@ def jogo_principal():
         print(f"Escolha de arma inválida: {arma_escolhida}")
         return
 
-    # --- Capítulo 1 --- (Adicionado)
+    
     exibir_texto("Capítulo 1: O Chamado do Estagiário", cor=AMARELO)
 
     exibir_texto(
@@ -1481,7 +1475,7 @@ def jogo_principal():
         if resultado == "derrota":
             exibir_texto("Você foi derrotado! Fim de jogo.")
             return
-        elif resultado is None:  # Caso o jogador feche a janela durante o combate
+        elif resultado is None:  
             return
 
         exibir_texto(
@@ -1491,7 +1485,7 @@ def jogo_principal():
         if not escolha_caminho:
             return
 
-        if escolha_caminho == "entrar_na_porta_a_direita":  # Corrigido para usar o valor retornado
+        if escolha_caminho == "entrar_na_porta_a_direita":  
 
             inimigo2_aleatorio = random.choice(inimigos_cap1)
             inimigo2_instanciado = inimigo2_aleatorio()
@@ -1545,11 +1539,11 @@ def jogo_principal():
                     exibir_texto(
                         f"Então {jogador.nome} decide seguir a diante...")
 
-                else:  # Não ajudou a garota
+                else:  
                     exibir_texto(
                         "Você decide não ajudar a garota e segue em frente.")
 
-                # Caminho comum após a sala do baú/garota ou se não ajudou a garota
+                
                 exibir_texto(
                     "Você sente calafrios, a cada passo que da, sente um terrível poder a sua frente. \nUma porta enorme está no fim do corredor, e você percebe que é de lá que vem seus calafrios. ")
                 exibir_texto(
@@ -1558,7 +1552,7 @@ def jogo_principal():
                     f"Ademiro: Achei que nunca iria chegar, {jogador.nome} \nAdemiro: Como ousa invadir meu santuário? \nAdemiro: Não permitirei que tal ato de rebeldia saia impune. \nAdemiro: EU TE FAREI MEU ESTAGIÁRIO {jogador.nome} MUAHAHAHAHAHAHAHAHA")
 
                 tocar_musica(musica_chefao, forcar_troca=True)
-                chefao_ademiro = Ademiro()  # Instancia Ademiro aqui
+                chefao_ademiro = Ademiro()  
                 resultado_ademiro = combate(
                     jogador, chefao_ademiro, resistencias, dado_jogador, tela)
                 tocar_musica(musica_jogo, forcar_troca=True)
@@ -1569,16 +1563,16 @@ def jogo_principal():
                     return
                 elif resultado_ademiro == "vitoria":
                     exibir_texto(f"Parabéns, {jogador.nome}! Você derrotou Ademiro Santiro!\nSua primeira jornada foi travada com muita luta e muita habilidade.\nVocê retornará para a DIAFI como um herói, pois finalmente nasceu alguém que pudesse combater este mal.\nVoltando para DIAFI...")
-                    # --- Continuação da História (Capítulo 2) --- (Adicionado)
+                   
                     iniciar_capitulo_2(
                         jogador, resistencias, dado_jogador, tela)
-                    return  # Fim do jogo após capítulo 2
-                else:  # Se o jogador fechou a janela durante a luta contra Ademiro
+                    return  
+                else:  
                     return
 
-            else:  # Não abriu o baú
+            else:  
                 exibir_texto("Você decide não abrir o baú e segue em frente.")
-                # Caminho para o chefão
+                
                 exibir_texto(
                     "Você sente calafrios, a cada passo que da, sente um terrível poder a sua frente. \nUma porta enorme está no fim do corredor, e você percebe que é de lá que vem seus calafrios. ")
                 exibir_texto(
@@ -1587,7 +1581,7 @@ def jogo_principal():
                     f"Ademiro: Achei que nunca iria chegar, {jogador.nome} \nAdemiro: Como ousa invadir meu santuário? \nAdemiro: Não permitirei que tal ato de rebeldia saia impune. \nAdemiro: EU TE FAREI MEU ESTAGIÁRIO {jogador.nome} MUAHAHAHAHAHAHAHAHA")
 
                 tocar_musica(musica_chefao, forcar_troca=True)
-                chefao_ademiro = Ademiro()  # Instancia Ademiro aqui
+                chefao_ademiro = Ademiro()  
                 resultado_ademiro = combate(
                     jogador, chefao_ademiro, resistencias, dado_jogador, tela)
                 tocar_musica(musica_jogo, forcar_troca=True)
@@ -1598,14 +1592,14 @@ def jogo_principal():
                     return
                 elif resultado_ademiro == "vitoria":
                     exibir_texto(f"Parabéns, {jogador.nome}! Você derrotou Ademiro Santiro!\nSua primeira jornada foi travada com muita luta e muita habilidade.\nVocê retornará para a DIAFI como um herói, pois finalmente nasceu alguém que pudesse combater este mal.\nVoltando para DIAFI...")
-                    # --- Continuação da História (Capítulo 2) --- (Adicionado)
+                    
                     iniciar_capitulo_2(
                         jogador, resistencias, dado_jogador, tela)
-                    return  # Fim do jogo após capítulo 2
+                    return  
                 else:
                     return
 
-        elif escolha_caminho == "seguir_em_frente":  # Corrigido para usar o valor retornado
+        elif escolha_caminho == "seguir_em_frente":  
             inimigo3_aleatorio = random.choice(inimigos_cap1)
             inimigo3_instanciado = inimigo3_aleatorio()
 
@@ -1622,7 +1616,7 @@ def jogo_principal():
             elif resultado is None:
                 return
 
-            # Caminho para o chefão
+           
             exibir_texto(
                 "Você sente calafrios, a cada passo que da, sente um terrível poder a sua frente. \nUma porta enorme está no fim do corredor, e você percebe que é de lá que vem seus calafrios. ")
             exibir_texto(
@@ -1631,7 +1625,7 @@ def jogo_principal():
                 f"Ademiro: Achei que nunca iria chegar, {jogador.nome} \nAdemiro: Como ousa invadir meu santuário? \nAdemiro: Não permitirei que tal ato de rebeldia saia impune. \nAdemiro: EU TE FAREI MEU ESTAGIÁRIO {jogador.nome} MUAHAHAHAHAHAHAHAHA")
 
             tocar_musica(musica_chefao, forcar_troca=True)
-            chefao_ademiro = Ademiro()  # Instancia Ademiro aqui
+            chefao_ademiro = Ademiro()  
             resultado_ademiro = combate(
                 jogador, chefao_ademiro, resistencias, dado_jogador, tela)
             tocar_musica(musica_jogo, forcar_troca=True)
@@ -1641,13 +1635,13 @@ def jogo_principal():
                 return
             elif resultado_ademiro == "vitoria":
                 exibir_texto(f"Parabéns, {jogador.nome}! Você derrotou Ademiro Santiro!\nSua primeira jornada foi travada com muita luta e muita habilidade.\nVocê retornará para a DIAFI como um herói, pois finally nasceu alguém que pudesse combater este mal.\nVoltando para DIAFI...")
-                # --- Continuação da História (Capítulo 2) --- (Adicionado)
+               
                 iniciar_capitulo_2(jogador, resistencias, dado_jogador, tela)
-                return  # Fim do jogo após capítulo 2
+                return  
             else:
                 return
 
-    else:  # Não entrou na porta NAJ
+    else:  
         exibir_texto(
             "Você decide não entrar e volta para a entrada da caverna, mas algo bloqueia seu caminho...")
         inimigo_covarde = random.choice(inimigos_cap1)()
@@ -1661,7 +1655,7 @@ def jogo_principal():
                 "Você derrotou o monstro, mas não ache que sua jornada terminou.")
         return
 
-# --- Nova Função: Capítulo 2 ---
+
 
 
 def iniciar_capitulo_2(jogador, resistencias, dado_jogador, tela):
@@ -1674,7 +1668,7 @@ def iniciar_capitulo_2(jogador, resistencias, dado_jogador, tela):
 
     inimigos_cap2 = [EsqueletoRH, AranhaoTI]
 
-    # Encontro 1
+  
     exibir_texto("Você se dirige ao sombrio Departamento de RH...")
     inimigo_rh = EsqueletoRH()
     exibir_texto(f"Um {inimigo_rh.nome} surge das pilhas de papelada!")
@@ -1687,7 +1681,7 @@ def iniciar_capitulo_2(jogador, resistencias, dado_jogador, tela):
         return
     exibir_texto("Você superou a papelada infernal!")
 
-    # Encontro 2
+    
     exibir_texto(
         "Agora, você adentra os corredores cabeados do Departamento de TI...")
     inimigo_ti = AranhaoTI()
@@ -1701,7 +1695,7 @@ def iniciar_capitulo_2(jogador, resistencias, dado_jogador, tela):
         return
     exibir_texto("Bug corrigido! Você limpou a área.")
 
-    # Encontro 3
+
     exibir_texto("Após passar pelo Departamento de Ti, você avista uma sala com baixa iluminação. \nAo chegar perto da sala, você percebe um ser estranho, enfurecido, cheio de processos na mesa e esperando algum estagiário para obrigá-lo a fazeru seu trabalho")
     inimigo_vice_diretor = OrcTrabalhista()
     resultado_trabalhista = combate(
@@ -1713,36 +1707,36 @@ def iniciar_capitulo_2(jogador, resistencias, dado_jogador, tela):
         return
     exibir_texto(
         f"{jogador.nome} Jamais farei o trabalho por você, recebendo menos do que deveria.")
-    # Preparação para o Chefão do Capítulo 2
+   
     exibir_texto(f"Julianiri Chefiri: Incrível, {jogador.nome}! Mas o verdadeiro problema ainda reside nas sombras... \nJulianiri Chefiri: O líder dessa bagunça toda, Goão Jilherme, está camuflado na sala da diretoria! \nJulianiri Chefiri: Dizem que ele é meio... preguiçoso, mas não se deixe enganar. Vá e derrote o chefe.")
 
-    # Encontro com o Chefão Goão Jilherme
+    
     exibir_texto(
         "Você chega à imponente porta da diretoria. Um cheiro de café forte e processos acumulados paira no ar. \nFAÇA, APENAS FAÇA. FAÇA MINHA EMPRESA LUCRAR BRILHÕES E VOCÊ NÃO RECEBERÁ NADA EM TROCA HAHAHHAHAHA.")
     chefao_jilherme = GoaoJilherme()
-    # Diálogo de entrada
+    
     exibir_texto(chefao_jilherme.dialogo_entrada_aleatorio())
     exibir_texto(f"Prepare-se para enfrentar {chefao_jilherme.nome}!")
 
     tocar_musica(musica_chefao, forcar_troca=True,
-                 volume=0.4)  # Toca música de chefão
+                 volume=0.4) 
     resultado_jilherme = combate(
         jogador, chefao_jilherme, resistencias, dado_jogador, tela)
-    tocar_musica(musica_jogo, forcar_troca=True)  # Volta para música normal
+    tocar_musica(musica_jogo, forcar_troca=True)  
 
     if resultado_jilherme == "derrota":
-        # A mensagem de derrota já é exibida dentro da função combate com o diálogo do chefe
+        
         exibir_texto(
             "Goão Jilherme provou ser barril dobrado... Fim de jogo.")
         return
     elif resultado_jilherme == "vitoria":
-        # A mensagem de vitória já é exibida dentro da função combate com o diálogo do chefe
+        
         exibir_texto(
             f"Parabéns, {jogador.nome}! Você derrotou Goão Jilherme e trouxe ordem aos departamentos!\nSua lenda como o Herói CLT cresce a cada dia! \nVocê começa a inspirar gerações, a servir de exemplo para meros trabalhores comuns.")
         exibir_texto(
             "         ------------- FIM DO CAPÍTULO 2 -------------        \n------------- OBRIGADO POR JOGAR! -------------")
     elif resultado_jilherme is None:
-        return  # Jogador fechou a janela
+        return  
 
 
 if __name__ == "__main__":
