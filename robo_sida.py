@@ -15,7 +15,8 @@ pa.PAUSE = 1
 options = Options()
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
-# ----------------------------------------
+
+# IMPORTANDO A PLANILHA DO DIA
 
 sida_df = pd.read_excel("sida_hoje.xlsx", header=None)
 pd.set_option("display.max_rows", None)
@@ -128,3 +129,4 @@ for i in range(len(sida_df)):
 
 print("Processamento de todas as linhas concluído!")
 driver.quit()
+
